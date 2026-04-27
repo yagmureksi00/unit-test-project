@@ -1,0 +1,26 @@
+name: Karen Automated Testing
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Depoyu Klonla
+      uses: actions/checkout@v3
+
+    - name: Node.js Ortamını Kur
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Gerekli Paketleri (Jest) Yükle
+      run: npm install
+
+    - name: Birim Testlerini Çalıştır
+      run: npm test
