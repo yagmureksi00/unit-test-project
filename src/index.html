@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Hesap Oluştur</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SİSTEME KAYIT</h1>
+        <p class="subtitle">Lütfen bilgilerinizi eksiksiz girin</p>
+        
+        <form id="registerForm">
+            <div class="row">
+                <input type="text" id="firstName" placeholder="İsim (Maks. 30 Karakter)" required>
+                <input type="text" id="lastName" placeholder="Soyisim (Maks. 30 Karakter)" required>
+            </div>
+            
+            <input type="email" id="email" placeholder="E-posta Adresi" required>
+            
+            <label for="dob">Doğum Tarihi:</label>
+            <input type="date" id="dob" required>
+            
+            <input type="password" id="password" placeholder="Şifre" required>
+            <input type="password" id="confirmPassword" placeholder="Şifre (Tekrar)" required>
+            
+            <button type="submit">KAYIT OL</button>
+        </form>
+
+        <div id="messageBox"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

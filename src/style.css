@@ -1,0 +1,62 @@
+body {
+    background-color: #0a0b10;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: #161b22;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #30363d;
+    width: 400px;
+}
+
+h1 { color: #58a6ff; text-align: center; margin-bottom: 5px; }
+.subtitle { text-align: center; font-size: 0.85rem; color: #8b949e; margin-bottom: 25px; }
+
+label { font-size: 0.85rem; color: #8b949e; margin-left: 2px; }
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px 0;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.row { display: flex; gap: 15px; }
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: #238636;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+button:hover { background: #2ea043; }
+
+#messageBox {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.error-text { color: #ff4444; margin: 5px 0; }
+.success-text { color: #3fb950; font-weight: bold; text-align: center; }
