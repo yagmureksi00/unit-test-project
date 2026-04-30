@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeni Hesap Oluştur</title>
+    <title>Create a New Account</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>SİSTEME KAYIT</h1>
-        <p class="subtitle">Lütfen bilgilerinizi eksiksiz girin</p>
+        <h1>REGISTER WITH THE SYSTEM</h1>
+        <p class="subtitle">Please enter your information completely</p>
         
         <form id="registerForm">
             <div class="row">
-                <input type="text" id="firstName" placeholder="İsim (Maks. 30 Karakter)" required>
-                <input type="text" id="lastName" placeholder="Soyisim (Maks. 30 Karakter)" required>
+                <input type="text" id="firstName" placeholder="Name (Max. 30 characters)" required>
+                <input type="text" id="lastName" placeholder="Surname (Max. 30 characters)" required>
             </div>
             
-            <input type="email" id="email" placeholder="E-posta Adresi" required>
+            <input type="email" id="email" placeholder="Email Address" required>
             
-            <label for="dob">Doğum Tarihi:</label>
+            <label for="dob">Date of Birth:</label>
             <input type="date" id="dob" required>
             
-            <input type="password" id="password" placeholder="Şifre" required>
-            <input type="password" id="confirmPassword" placeholder="Şifre (Tekrar)" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" id="confirmPassword" placeholder="Password (Again)" required>
             
-            <button type="submit">KAYIT OL</button>
+            <button type="submit">SIGN UP</button>
         </form>
 
         <div id="messageBox"></div>

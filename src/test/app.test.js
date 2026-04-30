@@ -1,113 +1,130 @@
 // app.test.js
 const { validateRegistration } = require('../app');
 
-// --- SETUP & TEARDOWN (Ödev Gereksinimi) ---
+// --- SETUP & TEARDOWN ---
 beforeAll(() => {
-    console.log("Sistem Testleri Başlatılıyor... Veritabanı bağlantısı simüle edildi.");
+    console.log("System Tests Initiating... Database connection simulated.");
 });
 
 afterAll(() => {
-    console.log("Testler Tamamlandı. Simülasyon ortamı temizlendi.");
+    console.log("Tests Completed. Simulation environment cleared.");
 });
 
-describe("Yeni Hesap Oluşturma - Birim Testleri (15 Senaryo)", () => {
+describe("New Account Registration - Unit Tests (15 Scenarios)", () => {
 
-    // 1. Equivalence Partitioning (Geçerli Sınıf)
-    test("1. Tüm veriler kurallara uygun girildiğinde başarılı olmalıdır", () => {
+    // 1. Equivalence Partitioning (Valid Class)
+    test("1. Should succeed when all data is valid", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "tony@stark.com", dob: "1970-05-29", password: "Password123!", confirmPassword: "Password123!" };
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 2. Boundary Value Analysis (Sınır Değer - Geçerli)
-    test("2. İsim tam 30 karakter olduğunda kabul edilmelidir", () => {
+    // 2. Boundary Value Analysis (Valid Boundary)
+    test("2. Should accept exactly 30 characters for First Name", () => {
         const data = { firstName: "A".repeat(30), lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 3. Boundary Value Analysis (Sınır Değer - Geçersiz)
-    test("3. İsim 31 karakter olduğunda hata vermelidir", () => {
+    // 3. Boundary Value Analysis (Invalid Boundary)
+    test("3. Should fail when First Name is 31 characters", () => {
         const data = { firstName: "A".repeat(31), lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
         const result = validateRegistration(data);
         expect(result.isValid).toBe(false);
-        expect(result.errors).toContain("İsim 30 karakterden uzun olamaz.");
+        expect(result.errors).toContain("Name cannot exceed 30 characters.");
     });
 
-    // 4. Boundary Value Analysis (Sınır Değer - Geçerli)
-    test("4. Soyisim tam 30 karakter olduğunda kabul edilmelidir", () => {
+    // 4. Boundary Value Analysis (Valid Boundary)
+    test("4. Should accept exactly 30 characters for Last Name", () => {
         const data = { firstName: "Tony", lastName: "B".repeat(30), email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 5. Boundary Value Analysis (Sınır Değer - Geçersiz)
-    test("5. Soyisim 31 karakter olduğunda hata vermelidir", () => {
+    // 5. Boundary Value Analysis (Invalid Boundary)
+    test("5. Should fail when Last Name is 31 characters", () => {
         const data = { firstName: "Tony", lastName: "B".repeat(31), email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("Surname cannot exceed 30 characters.");
     });
 
-    // 6. Boundary Value Analysis (Sınır Değer - Tam 16 Yaş)
-    test("6. Kullanıcı tam 16 yaşında olduğunda kabul edilmelidir", () => {
+    // 6. Boundary Value Analysis (Valid - Exact 16 Years)
+    test("6. Should accept when user is exactly 16 years old", () => {
         const sixteenYearsAgo = new Date();
         sixteenYearsAgo.setFullYear(sixteenYearsAgo.getFullYear() - 16);
         const data = { firstName: "Peter", lastName: "Parker", email: "spider@man.com", dob: sixteenYearsAgo.toISOString().split('T')[0], password: "Password123!", confirmPassword: "Password123!" };
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 7. Boundary Value Analysis (Sınır Değer - 15 Yaş)
-    test("7. Kullanıcı 16 yaşından bir gün bile küçükse hata vermelidir", () => {
+    // 7. Boundary Value Analysis (Invalid - 15 Years)
+    test("7. Should fail when user is 15 years old", () => {
         const fifteenYearsAgo = new Date();
         fifteenYearsAgo.setFullYear(fifteenYearsAgo.getFullYear() - 15);
         const data = { firstName: "Peter", lastName: "Parker", email: "spider@man.com", dob: fifteenYearsAgo.toISOString().split('T')[0], password: "Password123!", confirmPassword: "Password123!" };
-        expect(validateRegistration(data).isValid).toBe(false);
-        expect(result.errors = ["Sisteme kayıt olmak için en az 16 yaşında olmalısınız."]);
+        
+        const result = validateRegistration(data); // Hata çözüldü: result değişkeni tanımlandı
+        
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("You must be at least 16 years old to register for the system."); // Hata çözüldü: İngilizce mesajla eşleşti
     });
 
-    // 8. Boundary Value Analysis (Sınır Değer - Geçerli Şifre Uzunluğu)
-    test("8. Şifre tam 8 karakter olduğunda kabul edilmelidir", () => {
+    // 8. Boundary Value Analysis (Valid Password Length)
+    test("8. Should accept password with exactly 8 characters", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Passw12!", confirmPassword: "Passw12!" };
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 9. Boundary Value Analysis (Sınır Değer - Geçersiz Şifre Uzunluğu)
-    test("9. Şifre 7 karakter olduğunda hata vermelidir", () => {
+    // 9. Boundary Value Analysis (Invalid Password Length)
+    test("9. Should fail when password is 7 characters", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Pass12!", confirmPassword: "Pass12!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("The password must be at least 8 characters long.");
     });
 
-    // 10. Equivalence Partitioning (Geçersiz Sınıf - Büyük Harf Yok)
-    test("10. Şifrede büyük harf olmadığında hata vermelidir", () => {
+    // 10. Equivalence Partitioning (Invalid - No Uppercase)
+    test("10. Should fail when password has no uppercase letter", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "password123!", confirmPassword: "password123!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("The password must contain at least one uppercase letter.");
     });
 
-    // 11. Equivalence Partitioning (Geçersiz Sınıf - Özel Karakter Yok)
-    test("11. Şifrede özel karakter olmadığında hata vermelidir", () => {
+    // 11. Equivalence Partitioning (Invalid - No Special Character)
+    test("11. Should fail when password has no special character", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Password123", confirmPassword: "Password123" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("The password must contain at least one special character.");
     });
 
-    // 12. Equivalence Partitioning (Geçersiz Sınıf - Şifre Uyuşmazlığı)
-    test("12. Şifreler birbiriyle eşleşmediğinde hata vermelidir", () => {
-        const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "BaskaSifre1!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+    // 12. Equivalence Partitioning (Invalid - Password Mismatch)
+    test("12. Should fail when passwords do not match", () => {
+        const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Different123!" };
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("The passwords you entered do not match.");
     });
 
-    // 13. Equivalence Partitioning (Geçersiz Sınıf - Hatalı E-posta Formatı 1)
-    test("13. E-posta adresinde '@' işareti olmadığında hata vermelidir", () => {
+    // 13. Equivalence Partitioning (Invalid Email - No '@')
+    test("13. Should fail when email does not contain '@'", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "testtest.com", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("Please enter a valid email address.");
     });
 
-    // 14. Equivalence Partitioning (Geçersiz Sınıf - Hatalı E-posta Formatı 2)
-    test("14. E-posta adresinde uzantı (.com vb.) olmadığında hata vermelidir", () => {
+    // 14. Equivalence Partitioning (Invalid Email - No Domain)
+    test("14. Should fail when email has no domain extension", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test", dob: "2000-01-01", password: "Password123!", confirmPassword: "Password123!" };
-        expect(validateRegistration(data).isValid).toBe(false);
+        const result = validateRegistration(data);
+        expect(result.isValid).toBe(false);
+        expect(result.errors).toContain("Please enter a valid email address.");
     });
 
-    // 15. Negatif Test (Çoklu Hata Durumu)
-    test("15. Birden fazla kural aynı anda ihlal edildiğinde tüm hataları yakalamalıdır", () => {
+    // 15. Negative Test (Multiple Errors)
+    test("15. Should capture multiple errors when several rules are violated", () => {
         const data = { firstName: "A".repeat(35), lastName: "Stark", email: "test", dob: "2020-01-01", password: "123", confirmPassword: "321" };
         const result = validateRegistration(data);
         expect(result.isValid).toBe(false);
-        expect(result.errors.length).toBeGreaterThan(2); // İsim, yaş, email, şifre uzunluğu, eşleşme... bir sürü hata dönmeli.
+        expect(result.errors.length).toBeGreaterThan(2); 
     });
 });

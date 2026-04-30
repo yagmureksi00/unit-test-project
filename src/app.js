@@ -1,19 +1,18 @@
 // app.js
 
-// 1. SAF MANTIK: HTML'den bağımsız doğrulama motoru (Test edilecek kısım burası)
 function validateRegistration(data) {
     const { firstName, lastName, email, dob, password, confirmPassword } = data;
     let errors = [];
 
-    // E-posta Kontrolü
+    // Email Check
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) errors.push("Lütfen geçerli bir e-posta adresi giriniz.");
+    if (!emailRegex.test(email)) errors.push("Please enter a valid email address.");
 
-    // İsim ve Soyisim Kontrolü
-    if (firstName.length > 30) errors.push("İsim 30 karakterden uzun olamaz.");
-    if (lastName.length > 30) errors.push("Soyisim 30 karakterden uzun olamaz.");
+    // First and Last Name Checks
+    if (firstName.length > 30) errors.push("Name cannot exceed 30 characters.");
+    if (lastName.length > 30) errors.push("Surname cannot exceed 30 characters.");
 
-    // Yaş Kontrolü
+    // Age Check
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -21,13 +20,13 @@ function validateRegistration(data) {
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
     }
-    if (age < 16) errors.push("Sisteme kayıt olmak için en az 16 yaşında olmalısınız.");
+    if (age < 16) errors.push("You must be at least 16 years old to register for the system.");
 
-    // Şifre Kontrolleri
-    if (password.length < 8) errors.push("Şifre en az 8 karakter uzunluğunda olmalıdır.");
-    if (!/[A-Z]/.test(password)) errors.push("Şifre en az bir büyük harf içermelidir.");
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("Şifre en az bir özel karakter içermelidir.");
-    if (password !== confirmPassword) errors.push("Girdiğiniz şifreler birbiriyle eşleşmiyor.");
+    // Password Checks
+    if (password.length < 8) errors.push("The password must be at least 8 characters long.");
+    if (!/[A-Z]/.test(password)) errors.push("The password must contain at least one uppercase letter.");
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("The password must contain at least one special character.");
+    if (password !== confirmPassword) errors.push("The passwords you entered do not match.");
 
     return {
         isValid: errors.length === 0,
