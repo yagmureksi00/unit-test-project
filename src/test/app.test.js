@@ -54,18 +54,18 @@ describe("New Account Registration - Unit Tests (15 Scenarios)", () => {
         expect(validateRegistration(data).isValid).toBe(true);
     });
 
-    // 7. Boundary Value Analysis (Invalid - 15 Years)
-    test("7. Should fail when user is 15 years old", () => {
-        const fifteenYearsAgo = new Date();
-        fifteenYearsAgo.setFullYear(fifteenYearsAgo.getFullYear() - 15);
-        const data = { firstName: "Peter", lastName: "Parker", email: "spider@man.com", dob: fifteenYearsAgo.toISOString().split('T')[0], password: "Password123!", confirmPassword: "Password123!" };
-        
-        const result = validateRegistration(data); // Hata çözüldü: result değişkeni tanımlandı
-        
-        expect(result.isValid).toBe(false);
-        expect(result.errors).toContain("You must be at least 16 years old to register for the system."); // Hata çözüldü: İngilizce mesajla eşleşti
-    });
-
+   // 7. Boundary Value Analysis (Sınır Değer - 15 Yaş)
+   test("7. If the user is even one day younger than 16, an error should be displayed", () => {
+    const fifteenYearsAgo = new Date();
+    fifteenYearsAgo.setFullYear(fifteenYearsAgo.getFullYear() - 15);
+    const data = { firstName: "Peter", lastName: "Parker", email: "spider@man.com", dob: fifteenYearsAgo.toISOString().split('T')[0], password: "Password123!", confirmPassword: "Password123!" };
+    
+    // EKSİK OLAN SATIR EKLENDİ
+    const result = validateRegistration(data); 
+    
+    expect(result.isValid).toBe(false);
+    expect(result.errors).toContain("You must be at least 16 years old to register for the system."); 
+});
     // 8. Boundary Value Analysis (Valid Password Length)
     test("8. Should accept password with exactly 8 characters", () => {
         const data = { firstName: "Tony", lastName: "Stark", email: "test@test.com", dob: "2000-01-01", password: "Passw12!", confirmPassword: "Passw12!" };
