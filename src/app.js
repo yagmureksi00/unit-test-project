@@ -35,13 +35,9 @@ function validateRegistration(data) {
     }
 
     // Password Checks
-    if (!password) errors.push("Password is required.");
-    else {
-        if (password.length < 7) errors.push("The password must be at least 8 characters long.");
-        if (!/[A-Z]/.test(password)) errors.push("The password must contain at least one uppercase letter.");
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("The password must contain at least one special character.");
-    }
-
+    if (password.length < 7) errors.push("The password must be at least 8 characters long.");
+    if (!/[A-Z]/.test(password)) errors.push("The password must contain at least one uppercase letter.");
+    // if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("The password must contain at least one special character.");
     // Confirm Password Checks
     if (password !== confirmPassword) errors.push("The passwords you entered do not match.");
 
