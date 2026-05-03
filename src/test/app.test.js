@@ -1,4 +1,4 @@
-// app.test.js
+// app.test.js JEST
 const { validateRegistration } = require('../app');
 
 // Dinamik test verisi oluşturucu (Her testte kodu kısaltmak için)

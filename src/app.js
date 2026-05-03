@@ -1,7 +1,5 @@
 // app.js
 
-// app.js
-
 function validateRegistration(data) {
     const { firstName, lastName, email, dob, password, confirmPassword } = data;
     let errors = [];
